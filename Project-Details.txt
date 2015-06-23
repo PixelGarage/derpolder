@@ -1,0 +1,36 @@
+Specific Project Details:
+
+Audio/Video conversion(FFMPEG)
+==============================
+## VP8/WebM
+ffmpeg -i Test.mp4 -vcodec libvpx -b:v 1024000 -s 960x540 -aspect 16:9 -an -y Picco.webm
+
+## Vorbis/WebM
+ffmpeg -i test_beat.m4a -acodec libvorbis -f webM -y test_beat.webM
+
+## Extract images
+ffmpeg -ss 00:00:05 -t 00:00:00.04 -i Picco.mp4 -r 25.0 Picco%03d.jpg
+
+
+Changes in Modules (Patches)
+============================
+1)
+
+
+Locked Modules (no update)
+===================
+1)
+
+
+
+Security settings Going LIVE
+============================
+1) Run security review (fix reported security threads)
+    a) Get help about site_audit specific commands
+    drush help --filter=site_audit
+
+    b) Start a report and save it as html
+    drush aa --html --bootstrap --detail --skip=insights > ~/Desktop/report.html
+
+2) Setup aes security (use key in db)
+3) DB and files backup only with encryption (see Backup and migrate)

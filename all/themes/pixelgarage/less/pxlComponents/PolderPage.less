@@ -1,0 +1,63 @@
+/*
+ *  PolderPage content type
+ * --------------------------------------------------*/
+
+// Variables
+// -------------------------
+
+@pp-hr-color: #fff;
+
+// Mixins
+// -------------------------
+// wysiwyg body
+.wysiwyg-body(@hr-color) {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: @pxl-text-font-bold;
+    font-size: 16px;
+  }
+  h1, h2 {
+    font-size: 18px;
+  }
+
+  p, tbody td {
+    font-family: @pxl-text-font;
+    font-size: 16px;
+  }
+
+  pre, address {
+    font-family: @pxl-text-font-italics;
+    font-size: 16px;
+  }
+
+  hr {
+    border: 0;
+    border-bottom: 2px dashed @hr-color;
+    background: none;
+  }
+
+}
+
+
+
+
+// General settings
+// -------------------------
+.node.node-polder-page {
+  .row {
+    div {
+      img, embed, video, audio, iframe {
+        display: block;
+        max-width: 100%;
+      }
+
+      .field-name-field-video-embed {
+
+      }
+
+      .field-name-body {
+        .wysiwyg-body(@pp-hr-color);
+      }
+
+    }
+  }
+}
