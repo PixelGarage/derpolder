@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'ScreenMatrixRegularCondensed';
+    src: url('fonts/ScreenMatrixRegularCondensed.eot');
+    src: url('fonts/ScreenMatrixRegularCondensed.eot') format('embedded-opentype'),
+         url('fonts/ScreenMatrixRegularCondensed.woff2') format('woff2'),
+         url('fonts/ScreenMatrixRegularCondensed.woff') format('woff'),
+         url('fonts/ScreenMatrixRegularCondensed.ttf') format('truetype'),
+         url('fonts/ScreenMatrixRegularCondensed.svg#ScreenMatrixRegularCondensed') format('svg');
+}

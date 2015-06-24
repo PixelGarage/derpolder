@@ -89,3 +89,12 @@ function pixelgarage_preprocess_page(&$vars) {
   $vars['bg_img_4'] = '';
 }
 
+/**
+ * Add the proximity effects script
+ * @param $vars
+ */
+function pixelgarage_preprocess_views_view_proximity(&$vars) {
+  // Apply the proximity effects
+  $path = drupal_get_path('theme', 'pixelgarage');
+  drupal_add_js($path . '/js/proximity_effects.js');
+}

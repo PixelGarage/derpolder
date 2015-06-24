@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'CallunaSansRegular';
+    src: url('fonts/CallunaSansRegular.eot');
+    src: url('fonts/CallunaSansRegular.eot') format('embedded-opentype'),
+         url('fonts/CallunaSansRegular.woff2') format('woff2'),
+         url('fonts/CallunaSansRegular.woff') format('woff'),
+         url('fonts/CallunaSansRegular.ttf') format('truetype'),
+         url('fonts/CallunaSansRegular.svg#CallunaSansRegular') format('svg');
+}
