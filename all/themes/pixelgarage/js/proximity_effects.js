@@ -8,7 +8,8 @@
 
 (function($) {
 
-    var $activeItem = null;
+    var $activeItem = null,
+        stopTypewriter = false;
 
     /**
      *  Defines a typewriter mode for text. Each letter is displayed separately and with a given delay, until the
@@ -20,10 +21,21 @@
      */
     function typewriterEffect($container, text, duration) {
         // split text in letters and display each letter separately
+        stopTypewriter = false;
+        $container.empty();
+
         $.each(text.split(''), function(i, letter){
+            // break, if flag is set
+            if (stopTypewriter) {
+                $container.empty();
+                return false;
+            }
 
             //we add 100*i ms delay to each letter
-            setTimeout(function(){
+            setTimeout(function() {
+                // stop effect immediately
+                if (stopTypewriter) return;
+
                 //we add the letter to the container
                 $container.html($container.html() + letter);
 
@@ -60,59 +72,101 @@
         // scale and / or change opacity of item depending on the mouse-item distance
         var $item		= $(this),
             d           = event.data,
-            $descrCont  = $(d.containerSelector + ' .pe-content-container > .content'),
+            $container  = $(d.containerSelector),
+            $descrCont  = $container.find(' .pe-content-container > .content'),
             $descr      = $item.find(d.descrSelector),
-            descrClone  = $descr.clone(),
             transfVal	= proximity * ( d.endScale - d.startScale ) + d.startScale,
-            opacityVal  = proximity * (d.endOpacity - d.startOpacity ) + d.startOpacity;
+            opacityVal  = proximity * (d.endOpacity - d.startOpacity ) + d.startOpacity,
+            $itemSound  = $item.find('.pe-item-sound')[0];
 
         // force the item to the front when proximity equals 1 and show its description, if available
         if (proximity == 1) {
             // put cell to front
             $item.css( 'z-index', 10 );
-            $descrCont.empty();
 
             // add a typewriter effect to description and fade it in
             if (!$item.is($activeItem)) {
-                typewriterEffect($descrCont, descrClone.text(), 100);
-                $descrCont.fadeIn(d.transDuration);
-            }
-            $activeItem = $item;
+                var text = $descr.text();
 
-        } else {
-            // reset cell, stop animation and hide description
+                typewriterEffect($descrCont, text, 100);
+                $descrCont.fadeIn(d.transDuration);
+                $itemSound.muted = false;
+                $itemSound.play();
+                $activeItem = $item;
+            }
+
+        } else if (proximity > 0) {
             $item.css( 'z-index', 1 );
 
+        } else {
+            // reset item, stop animation/audio and hide description
             if (!$activeItem || $activeItem.is($item)) {
                 $descrCont.stop(true,true).hide();
                 $activeItem = null;
+                $itemSound.pause();
+                stopTypewriter = true;
             }
 
         }
 
         // define item specific transformation and set its transparency
-        var transf	= 'scale(' + transfVal + ')';
+        var transf = 'scaleX(' + transfVal + ')',
+            filter = 'none';
 
         if ($item.hasClass('views-row-1')) {
-            transf = '';
+            transf = 'rotateX(' + (90 + transfVal*270) + 'deg)';
 
         } else if ($item.hasClass('views-row-2')) {
-            transf = '';
+            transf = 'rotateY(' + transfVal*360 + 'deg)';
+            filter = 'hue-rotate(' + transfVal*360 + 'deg)'
 
         } else if ($item.hasClass('views-row-3')) {
-            transf = '';
+            var tra = new Int8Array(3);
+            transf = 'translate3D(';
+            window.crypto.getRandomValues(tra);
+            for (var i = 0; i < tra.length; i++) {
+                var coord = tra[i] / 128 * transfVal * 5;
+                transf += coord.toString();
+                if (i < 2) transf += 'px,';
+            }
+            transf += 'px)';
+            opacityVal = 1.0;
 
         } else if ($item.hasClass('views-row-4')) {
-            transf = '';
+            var rot = new Int8Array(2);
+            transf = 'rotate3D(';
+            window.crypto.getRandomValues(rot);
+            for (i = 0; i < rot.length; i++) {
+                coord = rot[i] / 128 * transfVal * 5;
+                transf += coord.toString();
+                transf += ',';
+            }
+            transf += '0,' + transfVal * 20 + 'deg)';
+            opacityVal = 1.0;
 
         }
 
-        $item.css({
+        // 3D transformation
+        var perspect = '200px';
+        $container.css({
+            '-webkit-perspective': perspect,
+            '-moz-perspective': perspect,
+            '-ms-perspective': perspect,
+            'perspective': perspect,
+            '-webkit-transform-style': 'preserve-3d',
+            '-moz-transform-style': 'preserve-3d',
+            '-ms-transform-style': 'preserve-3d',
+            'transform-style': 'preserve-3d'
+        });
+        $item.find('img').css({
             '-webkit-transform'	: transf,
             '-moz-transform'	: transf,
-            '-o-transform'		: transf,
             '-ms-transform'		: transf,
             'transform'			: transf,
+            '-webkit-filter'	: filter,
+            '-moz-filter'	    : filter,
+            '-ms-filter'		: filter,
+            'filter'			: filter,
             'opacity'			: opacityVal
         });
 

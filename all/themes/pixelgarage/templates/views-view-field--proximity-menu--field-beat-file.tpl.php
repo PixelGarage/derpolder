@@ -43,11 +43,10 @@ if (!empty($row->field_field_beat_file)) {
 <!-- pe-item sound -->
 <?php if (count($sounds) >= 1): ?>
   <div class="audio-wrapper">
-    <audio class="pe-item-sound" title="Polder jingle" preload="auto" muted="muted" loop="loop" >
-      <source src="<?php print $sounds[0]['uri']; ?>" type="<?php print $sounds[0]['mime-type']; ?>" />
-      <?php if (count($sounds) > 1): ?>
-        <source src="<?php print $sounds[1]['uri']; ?>" type="<?php print $sounds[1]['mime-type']; ?>" />
-      <?php endif; ?>
+    <audio class="pe-item-sound" title="Polder jingle" preload="auto" muted="muted">
+      <?php foreach ($sounds as $index => $sound): ?>
+        <source src="<?php print $sound['uri']; ?>" type="<?php print $sound['mime-type']; ?>" />
+      <?php endforeach; ?>
     </audio>
   </div>
 <?php endif; ?>

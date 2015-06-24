@@ -9018,7 +9018,7 @@ form#user-login {
   border-radius: 0;
   box-shadow: none;
   color: #ffffff;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.4);
 }
 .pe-container .modal .modal-dialog .modal-content .modal-header {
   width: 100%;
@@ -9030,7 +9030,7 @@ form#user-login {
 }
 .pe-container .modal .modal-dialog .modal-content .modal-header button.close {
   position: relative;
-  margin: 0 -30px 0 0;
+  margin: -25px 0 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 70px;
   font-weight: 500;
@@ -9086,7 +9086,7 @@ form#user-login {
   width: 100%;
 }
 .node.node-polder-page .row div .field-name-field-video-embed {
-  opacity: 0.6;
+  opacity: 0.7;
 }
 .node.node-polder-page .row div .field-name-body h1,
 .node.node-polder-page .row div .field-name-body h2,
