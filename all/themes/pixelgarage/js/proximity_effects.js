@@ -118,7 +118,7 @@
 
         } else if ($item.hasClass('views-row-2')) {
             transf = 'rotateY(' + transfVal*360 + 'deg)';
-            filter = 'hue-rotate(' + transfVal*360 + 'deg)'
+            filter = 'hue-rotate(' + transfVal*270 + 'deg)'
 
         } else if ($item.hasClass('views-row-3')) {
             var tra = new Int8Array(3);
@@ -130,7 +130,6 @@
                 if (i < 2) transf += 'px,';
             }
             transf += 'px)';
-            opacityVal = 1.0;
 
         } else if ($item.hasClass('views-row-4')) {
             var rot = new Int8Array(2);
@@ -142,31 +141,30 @@
                 transf += ',';
             }
             transf += '0,' + transfVal * 20 + 'deg)';
-            opacityVal = 1.0;
 
         }
 
         // 3D transformation
-        var perspect = '200px';
+        var perspect = '600px';
         $container.css({
+            'perspective': perspect,
             '-webkit-perspective': perspect,
             '-moz-perspective': perspect,
             '-ms-perspective': perspect,
-            'perspective': perspect,
+        });
+        $item.find('img').css({
             '-webkit-transform-style': 'preserve-3d',
             '-moz-transform-style': 'preserve-3d',
             '-ms-transform-style': 'preserve-3d',
-            'transform-style': 'preserve-3d'
-        });
-        $item.find('img').css({
+            'transform-style': 'preserve-3d',
+            'transform'			: transf,
             '-webkit-transform'	: transf,
             '-moz-transform'	: transf,
             '-ms-transform'		: transf,
-            'transform'			: transf,
+            'filter'			: filter,
             '-webkit-filter'	: filter,
             '-moz-filter'	    : filter,
             '-ms-filter'		: filter,
-            'filter'			: filter,
             'opacity'			: opacityVal
         });
 

@@ -153,7 +153,7 @@
 
 // Medium screen / desktop
 //** Deprecated `@screen-md` as of v3.0.1
-@screen-md:                  992px;
+@screen-md:                  1024px;
 @screen-md-min:              @screen-md;
 //** Deprecated `@screen-desktop` as of v3.0.1
 @screen-desktop:             @screen-md-min;
@@ -177,7 +177,7 @@
 //## Define your custom media queries.
 
 // Media queries
-@narrow:  ~"screen and (min-width: @{screen-xs-max})";
+@narrow:  ~"screen and (min-width: @{screen-xs-min})";
 @tablet:  ~"screen and (min-width: @{screen-sm-min})";
 @normal:  ~"screen and (min-width: @{screen-md-min})";
 @wide:    ~"screen and (min-width: @{screen-lg-min})";

@@ -111,13 +111,20 @@
   </div>
 </header>
 
-<!-- background video -->
-<div id="background-wrapper">
-  <img class="bg-img bg-img1" src="<?php print $bg_img_1; ?>">
-  <?php if (!empty($bg_img_2)): ?><img class="bg-img bg-img2" src="<?php print $bg_img_2; ?>"><?php endif; ?>
-  <?php if (!empty($bg_img_3)): ?><img class="bg-img bg-img3" src="<?php print $bg_img_3; ?>"><?php endif; ?>
-  <?php if (!empty($bg_img_4)): ?><img class="bg-img bg-img4" src="<?php print $bg_img_4; ?>"><?php endif; ?>
+<!-- background images -->
+<?php if (count($bg_images) > 0): ?>
+<div id="bg-image-wrapper">
+  <picture>
+    <?php foreach ($bg_images as $index => $image): ?>
+      <?php if (!empty($image['media'])): ?>
+        <source srcset="<?php print $image['src']; ?>" type="<?php print $image['type']; ?>" media="<?php print $image['media']; ?>"/>
+      <?php else: ?>
+        <img class="bg-img bg-img1" src="<?php print $image['src']; ?>">
+      <?php endif; ?>
+    <?php endforeach; ?>
+  </picture>
 </div>
+<?php endif; ?>
 
 <!-- background video -->
 <?php if (!empty($bg_video_src_0)): ?>

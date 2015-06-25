@@ -24,7 +24,6 @@ function pixelgarage_preprocess_page(&$vars) {
   pg_login_preprocess_page($vars);
 
   // background audio/video in different formats
-  $image_path = '/' . drupal_get_path('theme', 'pixelgarage') . '/images'; // path relative to document root
   $bg_audio_play = null;
   $bg_sound_title = '';
   $bg_sound_artist = '';
@@ -74,6 +73,32 @@ function pixelgarage_preprocess_page(&$vars) {
       $bg_video_play = (!empty($node->field_image_2)) ? $node->field_image_2[LANGUAGE_NONE][0]['uri'] : null;
       $bg_video_poster = (!empty($node->field_video_poster)) ? $node->field_video_poster[LANGUAGE_NONE][0]['uri'] : null;
     }
+
+    // get the background images
+    $bg_images = array();
+    if (!empty($node->field_background_images)) {
+      foreach ($node->field_background_images[LANGUAGE_NONE] as $index => $image) {
+        // get image properties
+        $image_mime = $image['filemime'];
+        $image_uri = $image['uri'];
+        $width = ($index > 0) ? $image['width']+1 : '';
+        $media = (!empty($width)) ? 'only screen and (min-width: ' . $width . 'px)' : '';
+        // set new media width
+        if (!empty($image_mime) && !empty($image_uri)) {
+          // file uri
+          $bg_images[] = array(
+            'type' => $image_mime,
+            'src' => file_create_url($image_uri),
+            'media' => '',
+          );
+          if ($index > 0)
+            $bg_images[$index-1]['media'] = $media;
+        }
+      }
+    }
+    // background images
+    $vars['bg_images'] = $bg_images;
+
   }
   $vars['bg_audio_play'] = !empty($bg_audio_play) ? file_create_url($bg_audio_play) : null;
   $vars['bg_sound_title'] = $bg_sound_title;
@@ -82,11 +107,6 @@ function pixelgarage_preprocess_page(&$vars) {
   $vars['bg_video_play'] = !empty($bg_video_play) ? file_create_url($bg_video_play) : null;
   $vars['video_poster'] = $bg_video_poster;
 
-  // background images
-  $vars['bg_img_1'] = $image_path . '/polder_hg.jpg';
-  $vars['bg_img_2'] = '';
-  $vars['bg_img_3'] = '';
-  $vars['bg_img_4'] = '';
 }
 
 /**
