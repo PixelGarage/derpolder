@@ -153,24 +153,24 @@
         // 3D transformation
         var perspect = '600px';
         $container.css({
-            'perspective': perspect,
             '-webkit-perspective': perspect,
             '-moz-perspective': perspect,
             '-ms-perspective': perspect,
+            'perspective': perspect
         });
         $item.find('img').css({
             '-webkit-transform-style': 'preserve-3d',
             '-moz-transform-style': 'preserve-3d',
             '-ms-transform-style': 'preserve-3d',
             'transform-style': 'preserve-3d',
-            'transform'			: transf,
             '-webkit-transform'	: transf,
             '-moz-transform'	: transf,
             '-ms-transform'		: transf,
-            'filter'			: filter,
+            'transform'			: transf,
             '-webkit-filter'	: filter,
             '-moz-filter'	    : filter,
             '-ms-filter'		: filter,
+            'filter'			: filter,
             'opacity'			: opacityVal
         });
 
