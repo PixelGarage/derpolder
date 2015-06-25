@@ -101,7 +101,7 @@ function pixelgarage_preprocess_page(&$vars) {
 
   }
   $vars['bg_audio_play'] = !empty($bg_audio_play) ? file_create_url($bg_audio_play) : null;
-  $vars['bg_sound_title'] = $bg_sound_title;
+  $vars['bg_sound_title'] = '';//$bg_sound_title;
   $vars['bg_sound_artist'] = $bg_sound_artist;
 
   $vars['bg_video_play'] = !empty($bg_video_play) ? file_create_url($bg_video_play) : null;
