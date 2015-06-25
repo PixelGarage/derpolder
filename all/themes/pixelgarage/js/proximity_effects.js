@@ -113,6 +113,12 @@
         var transf = 'scaleX(' + transfVal + ')',
             filter = 'none';
 
+        // mobile devices
+        if (isMobile.any) {
+            opacityVal = 1.0;
+            filter = 'hue-rotate(135deg)';
+        }
+
         if ($item.hasClass('views-row-1')) {
             transf = 'rotateX(' + (90 + transfVal*270) + 'deg)';
 

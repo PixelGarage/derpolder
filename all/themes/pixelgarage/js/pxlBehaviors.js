@@ -105,29 +105,6 @@
         }
     }
 
-    /**
-     * Adds a fading image slider to the background.
-     */
-    Drupal.behaviors.backgroundImage = {
-        attach: function () {
-            // set interval for background image exchange
-            var $bg_images  = $('#background-wrapper'),
-                imgCount    = $bg_images.length,
-                index = 1;
-
-            if (imgCount > 1) {
-                setInterval(function() {
-                    var nextIndex = (index%imgCount)+1,
-                        selActive = '#background-wrapper .bg-img' + index,
-                        selNext = '#background-wrapper .bg-img' + nextIndex;
-                    $(selNext).fadeIn(600);
-                    $(selActive).fadeOut(600);
-                    index = nextIndex;
-
-                }, 7000);
-            }
-        }
-    }
 
 
 })(jQuery);

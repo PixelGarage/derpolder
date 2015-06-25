@@ -116,5 +116,6 @@ function pixelgarage_preprocess_page(&$vars) {
 function pixelgarage_preprocess_views_view_proximity(&$vars) {
   // Apply the proximity effects
   $path = drupal_get_path('theme', 'pixelgarage');
+  drupal_add_js($path . '/js/isMobile.min.js');
   drupal_add_js($path . '/js/proximity_effects.js');
 }
