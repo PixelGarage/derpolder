@@ -34,6 +34,111 @@
             });
 
         }
+    };
+
+
+    function _sizePositionItem($items, itemImages) {
+        // calculate image factor and scale factor
+        var maxWidth = 1400,
+            imgWidth = 1400,
+            imgHeight = 858,
+            scale = 1,
+            imgFact  = 1,
+            ww = $(window).width(),
+            wh = $(window).height();
+
+        if (ww > 1200) {
+            // image width = 1400px
+            imgWidth = 1400;
+            imgHeight = 858;
+
+        } else if (ww > 1024) {
+            // image width = 1200px
+            imgWidth = 1200;
+            imgHeight = 735;
+
+        } else if (ww > 768) {
+            // image width = 1024px
+            imgWidth = 1024;
+            imgHeight = 628;
+
+        } else if (ww > 480) {
+            // image width = 768px
+            imgWidth = 768;
+            imgHeight = 471;
+
+        } else {
+            // image width = 480px
+            imgWidth = 480;
+            imgHeight = 294;
+
+        }
+        scale = Math.max(ww/imgWidth, wh/imgHeight, 1.0);
+        imgFact = imgWidth / maxWidth;
+
+        // position all items
+        $items.each(function (i) {
+            var $item = $(this),
+                $iImg  = $item.find('.views-field-field-image img'),
+                imgObj  = itemImages[i],
+                iTop = '0px',
+                iLeft = '0px';
+
+            if ($item.hasClass('views-row-1')) {
+                iLeft = (520*imgFact*scale) + 'px'; iTop = (100*imgFact*scale) + 'px';
+
+            } else if ($item.hasClass('views-row-2')) {
+                iLeft = (136*imgFact*scale) + 'px'; iTop = (408*imgFact*scale) + 'px';
+
+            } else if ($item.hasClass('views-row-3')) {
+                iLeft = (257*imgFact*scale) + 'px'; iTop = (-1*imgFact*scale) + 'px';
+
+            } else if ($item.hasClass('views-row-4')) {
+                iLeft = (880*imgFact*scale) + 'px'; iTop = (479*imgFact*scale) + 'px';
+
+            }
+
+            // position and size item in css
+            $iImg.width(imgFact*scale*imgObj.width);
+            $iImg.height(imgFact*scale*imgObj.height);
+            $item.css({'position': 'absolute', 'top': iTop, 'left': iLeft});
+        });
+
+    }
+
+    /**
+     * Positions the proximity items according to the window size.
+     */
+    Drupal.behaviors.positionItems = {
+        attach: function () {
+            // Iterate through all proximity container instances
+            $.each(Drupal.settings.proximity, function (container, settings) {
+
+                var contSelector = '#' + container,
+                    $container   = $(contSelector),
+                    $items       = $container.find(settings.item_selector),
+                    itemImages   = [];
+
+
+                $(window).off('.proximity');
+                $(window).on('load.proximity', function() {
+                    $items.each(function () {
+                        var $item = $(this),
+                            $iImg  = $item.find('.views-field-field-image img');
+
+                        // store original size of item images once for scaling
+                        itemImages.push({width: $iImg.width(), height: $iImg.height()});
+
+                    });
+                    _sizePositionItem($items, itemImages);
+                });
+                $(window).on('resize.proximity', function() {
+                    _sizePositionItem($items, itemImages);
+                });
+
+            }); // container instances
+
+        }
     }
 
     /**
