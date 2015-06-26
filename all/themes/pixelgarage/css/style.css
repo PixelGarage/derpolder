@@ -9380,10 +9380,10 @@ form#user-login {
   font-size: 30px;
   text-align: center;
   color: #ffffff;
-  z-index: 20;
 }
 .pe-container .pe-content-container .content {
   display: inline-block;
+  z-index: 20;
 }
 /*
  *  PolderPage content type

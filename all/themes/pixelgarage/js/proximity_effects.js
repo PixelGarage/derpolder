@@ -79,12 +79,12 @@
             opacityVal  = proximity * (d.endOpacity - d.startOpacity ) + d.startOpacity,
             $itemSound  = $item.find('.pe-item-sound')[0];
 
-        // force the item to the front when proximity equals 1 and show its description, if available
         if (proximity == 1) {
-            // put cell to front
+            //
+            // force the item to the front when proximity equals 1 and show its description, if available
             $item.css( 'z-index', 10 );
 
-            // add a typewriter effect to description and fade it in
+            // add a typewriter and sound effect and fade description in
             if (!$item.is($activeItem)) {
                 var text = $descr.text();
 
@@ -93,20 +93,38 @@
                 $itemSound.muted = false;
                 $itemSound.play();
                 $activeItem = $item;
-            }
+                if (isMobile.any) Drupal.settings.proximityItemTouchCounter = 0;
 
-        } else if (proximity > 0) {
-            $item.css( 'z-index', 1 );
+            } else {
+                // count touches on specific item
+                if (isMobile.any) Drupal.settings.proximityItemTouchCounter++;
+
+            }
 
         } else {
-            // reset item, stop animation/audio and hide description
-            if (!$activeItem || $activeItem.is($item)) {
-                $descrCont.stop(true,true).hide();
-                $activeItem = null;
-                $itemSound.pause();
-                stopTypewriter = true;
-            }
+            //
+            // send item to back again
+            $item.css( 'z-index', 1 );
 
+            if (proximity == 0) {
+                //
+                // reset item, stop animation/audio and hide description
+                if ($item.is($activeItem)) {
+                    if (!isMobile.any || (isMobile.any && Drupal.settings.proximityItemTouchCounter > 0)) {
+                        // clear item effects (on mobile only on second click)
+                        $descrCont.stop(true,true).hide();
+                        $itemSound.pause();
+                        stopTypewriter = true;
+                        $activeItem = null;
+                        Drupal.settings.proximityItemTouchCounter = 0;
+                    } else {
+                        // count touches on specific item
+                        if (isMobile.any) Drupal.settings.proximityItemTouchCounter++;
+
+                    }
+                }
+
+            }
         }
 
         // define item specific transformation and set its transparency
@@ -120,11 +138,15 @@
         }
 
         if ($item.hasClass('views-row-1')) {
-            transf = 'rotateX(' + (90 + transfVal*270) + 'deg)';
+            if (isMobile.any) {
+                transf = '';
+            } else {
+                transf = 'rotateX(' + (90 + transfVal*270) + 'deg)';
+            }
 
         } else if ($item.hasClass('views-row-2')) {
             transf = 'rotateY(' + transfVal*360 + 'deg)';
-            filter = 'hue-rotate(' + transfVal*270 + 'deg)'
+            if (!isMobile.any) filter = 'hue-rotate(' + transfVal*270 + 'deg)'
 
         } else if ($item.hasClass('views-row-3')) {
             var tra = new Int8Array(3);

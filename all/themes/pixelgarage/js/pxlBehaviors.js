@@ -7,8 +7,37 @@
 (function ($) {
 
     /**
-     * Controls the video playback.
+     * Audio controller.
      */
+    Drupal.behaviors.audioController = {
+        attach: function () {
+            var audio   = document.getElementById('bg-audio'),
+                $toggle = $(document).find('#audio-controls'),
+                $toggleImg = $toggle.find('img.audio-play'),
+                imgUrl     = $toggleImg.attr('src');
+
+            // click on play / pause button
+            $toggle.once('click', function () {
+                $toggle.on('click', function () {
+                    // toggle the play button
+                    if (audio.paused || audio.ended) {
+                        audio.play();
+                        $toggleImg.attr('src', imgUrl.replace('tonan', 'tonaus'));
+                    } else {
+                        audio.pause();
+                        $toggleImg.attr('src', imgUrl.replace('tonaus', 'tonan'));
+                    }
+
+                    // don't propagate click event further up
+                    return false;
+                });
+            });
+
+        }
+    }
+
+    /**
+     * Controls the video playback.
     Drupal.behaviors.videoController = {
         attach: function () {
             var video = document.getElementById('picco-video'),
@@ -77,34 +106,6 @@
 
         }
     };
-
-    Drupal.behaviors.audioController = {
-        attach: function () {
-            var audio   = document.getElementById('bg-audio'),
-                $toggle = $(document).find('#audio-controls'),
-                $toggleImg = $toggle.find('img.audio-play'),
-                imgUrl     = $toggleImg.attr('src');
-
-            // click on play / pause button
-            $toggle.once('click', function () {
-                $toggle.on('click', function () {
-                    // toggle the play button
-                    if (audio.paused || audio.ended) {
-                        audio.play();
-                        $toggleImg.attr('src', imgUrl.replace('tonan', 'tonaus'));
-                    } else {
-                        audio.pause();
-                        $toggleImg.attr('src', imgUrl.replace('tonaus', 'tonan'));
-                    }
-
-                    // don't propagate click event further up
-                    return false;
-                });
-            });
-
-        }
-    }
-
-
+     */
 
 })(jQuery);
