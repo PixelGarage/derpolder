@@ -9329,7 +9329,7 @@ form#user-login {
   border-radius: 0;
   box-shadow: none;
   color: #ffffff;
-  background-color: rgba(220, 220, 220, 0.7);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 .pe-container .modal .modal-dialog .modal-content .modal-header {
   width: 100%;
