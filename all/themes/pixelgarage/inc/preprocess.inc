@@ -101,7 +101,7 @@ function pixelgarage_preprocess_page(&$vars) {
 
   }
   $vars['bg_audio_play'] = !empty($bg_audio_play) ? file_create_url($bg_audio_play) : null;
-  $vars['bg_sound_title'] = $bg_sound_title;
+  $vars['bg_sound_title'] = '';//$bg_sound_title;
   $vars['bg_sound_artist'] = $bg_sound_artist;
 
   $vars['bg_video_play'] = !empty($bg_video_play) ? file_create_url($bg_video_play) : null;
@@ -116,6 +116,5 @@ function pixelgarage_preprocess_page(&$vars) {
 function pixelgarage_preprocess_views_view_proximity(&$vars) {
   // Apply the proximity effects
   $path = drupal_get_path('theme', 'pixelgarage');
-  drupal_add_js($path . '/js/isMobile.min.js');
   drupal_add_js($path . '/js/proximity_effects.js');
 }

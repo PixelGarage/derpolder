@@ -37,7 +37,13 @@
      */
      function loadItemContent(container_index, param) {
         //
-        // load item specific content in defined container via ajax
+        // Mobile devices: load item content on second touch
+        if (isMobile.any && Drupal.settings.proximityItemTouchCounter == 0) {
+            return;
+        }
+
+        //
+        // load item specific content into specified container via ajax
         var $container  = $('#pe-container-' + container_index),
             $item       = $container.find('.pe-item-' + param),
             $dialog     = $container.find('.modal'),
@@ -157,6 +163,7 @@
                 loadItemContent(containerIndex, param);
 
         } else {
+            // reload page from cache
             window.location.reload();
 
         }
@@ -215,8 +222,11 @@
                 // make sure that all content in modal is cleared (videos, audios etc.)
                 $dialog.once('modal-hidden', function() {
                     $dialog.on('hidden.bs.modal', function() {
-                        // empty the modal body
+                        // empty the modal body stopping all media etc.
                         $(this).find('.modal-body').empty();
+
+                        // set history to home page
+                        window.history.pushState(null, "", "/");
                     });
                 });
 
