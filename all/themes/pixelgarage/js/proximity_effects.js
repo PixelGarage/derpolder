@@ -129,7 +129,21 @@
 
         // define item specific transformation and set its transparency
         var transf = 'scaleX(' + transfVal + ')',
-            filter = 'none';
+            filter = 'none',
+            _getRandomValues = function() {
+                // crypto supported only IE11+
+                var crypto = window.crypto || window.msCrypto; // for IE 11
+                if(crypto) {
+                    // use cryptographic random generator
+                    var randArr = new Int8Array(3);
+                    window.crypto.getRandomValues(randArr);
+                    return randArr;
+
+                } else {
+                    // use Math.random
+                    return [Math.random() * 256 -128, Math.random() * 256 -128, Math.random() * 256 -128];
+                }
+            };
 
         // mobile devices
         if (isMobile.any) {
@@ -149,9 +163,8 @@
             if (!isMobile.any) filter = 'hue-rotate(' + transfVal*270 + 'deg)'
 
         } else if ($item.hasClass('views-row-3')) {
-            var tra = new Int8Array(3);
+            var tra = _getRandomValues();
             transf = 'translate3D(';
-            window.crypto.getRandomValues(tra);
             for (var i = 0; i < tra.length; i++) {
                 var coord = tra[i] / 128 * transfVal * 5;
                 transf += coord.toString();
@@ -160,15 +173,15 @@
             transf += 'px)';
 
         } else if ($item.hasClass('views-row-4')) {
-            var rot = new Int8Array(2);
+            var rot = _getRandomValues();
+            //rot[3] = 0.0;
             transf = 'rotate3D(';
-            window.crypto.getRandomValues(rot);
             for (i = 0; i < rot.length; i++) {
                 coord = rot[i] / 128 * transfVal * 5;
                 transf += coord.toString();
                 transf += ',';
             }
-            transf += '0,' + transfVal * 20 + 'deg)';
+            transf += transfVal * 20 + 'deg)';
 
         }
 
