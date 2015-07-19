@@ -8774,6 +8774,18 @@ form#user-login {
   right: 0;
   overflow: hidden;
 }
+.pe-container #proximity-ajax-loader {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+}
+.pe-container #proximity-ajax-loader img {
+  display: inline-block;
+}
 .pe-container .pe-background-image {
   display: none;
   width: 100%;
