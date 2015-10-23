@@ -49,11 +49,10 @@
   </div>
 
   <!--
-  Content container (used for page transitions)
-  The content for the body is retrieved via AJAX
+  Content container (used for typewriter text info)
+  -->
   <div id="pe-content-container-<?php print $container_index; ?>" class="pe-content-container" role="page">
     <div class="content"></div>
   </div>
-  -->
 
 </div>
